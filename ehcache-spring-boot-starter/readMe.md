@@ -32,4 +32,5 @@
     [使用demo](https://github.com/MoonChaserChen/demo/tree/master/demo-ehcache-spring-boot-starter)
 
 * 配置项
-![config.png](http://image.akira.ink/md/akira-spring-boot-starter/ehcache-spring-boot-starter/config.png)
+
+    ![config.png](http://image.akira.ink/md/akira-spring-boot-starter/ehcache-spring-boot-starter/config.png)
