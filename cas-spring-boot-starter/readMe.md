@@ -1,4 +1,4 @@
-### Spring Boot 快速集成CAS
+### Spring Boot 快速集成CAS Client
 
 ### 如何使用cas-spring-boot-starter
 
