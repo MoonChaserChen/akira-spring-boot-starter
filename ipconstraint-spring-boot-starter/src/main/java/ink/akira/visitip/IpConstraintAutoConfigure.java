@@ -18,11 +18,13 @@ public class IpConstraintAutoConfigure implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        IpRegexpAuthenticator ipRegexpAuthenticator = new IpRegexpAuthenticator(ipConstraintProperties.getAllowedRegexIp());
-        IpClient ipClient = new IpClient(ipRegexpAuthenticator);
-        Config config = new Config(ipClient);
-        SecurityInterceptor securityInterceptor = new SecurityInterceptor(config);
-        registry.addInterceptor(securityInterceptor)
-                .addPathPatterns(ipConstraintProperties.getProtectedAntPath());
+        if (ipConstraintProperties.isEnable()) {
+            IpRegexpAuthenticator ipRegexpAuthenticator = new IpRegexpAuthenticator(ipConstraintProperties.getAllowedRegexIp());
+            IpClient ipClient = new IpClient(ipRegexpAuthenticator);
+            Config config = new Config(ipClient);
+            SecurityInterceptor securityInterceptor = new SecurityInterceptor(config);
+            registry.addInterceptor(securityInterceptor)
+                    .addPathPatterns(ipConstraintProperties.getProtectedAntPath());
+        }
     }
 }
