@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-  ink.akira.jedis.JedisAutoConfigure
+  ink.akira.boot.jedis.JedisAutoConfigure

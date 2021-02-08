@@ -1,9 +1,10 @@
-package ink.akira.jedis.service;
+package ink.akira.boot.jedis.service;
 
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
 /**
+ * @author akira
  * Created by akira on 2019/2/14.
  */
 public class JedisDAO {

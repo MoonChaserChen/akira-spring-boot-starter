@@ -1,6 +1,6 @@
-package ink.akira.jedis;
+package ink.akira.boot.jedis;
 
-import ink.akira.jedis.service.JedisDAO;
+import ink.akira.boot.jedis.service.JedisDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -9,6 +9,7 @@ import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
 
 /**
+ * @author akira
  * Created by akira on 2019/2/14.
  */
 @Configuration
