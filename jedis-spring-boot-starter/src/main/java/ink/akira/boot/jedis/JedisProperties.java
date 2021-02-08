@@ -11,7 +11,7 @@ public class JedisProperties {
     private String host                              = "localhost";
     private int    port                              = 6379;
     private int    db                                = 0;
-    private String auth                              = "foobared";
+    private String auth;
     private int    poolMaxTotal                      = 500;
     private int    poolMaxIdle                       = 100;
     private int    poolMinIdle                       = 50;
