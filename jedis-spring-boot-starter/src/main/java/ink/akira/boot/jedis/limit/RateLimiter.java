@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class RateLimiter implements Limiter {
     private final String        luaScript;
-    private static final int    RESULT_LIMITED  = 0;
-    private static final String SCRIPT_FILE     = "/rate_limiter.lua";
+    private static final int    RESULT_UNLIMITED = 1;
+    private static final String SCRIPT_FILE      = "/rate_limiter.lua";
 
     private final JedisPool     jedisPool;
 
@@ -29,7 +29,7 @@ public class RateLimiter implements Limiter {
         }
     }
 
-    public void tryGetToken(String key, int maxToken, double tokenRate) throws LimitedException {
+    public boolean tryAcquire(String key, int maxToken, double tokenRate) {
         List<String> keys = new ArrayList<>(1);
         keys.add(key);
         List<String> args = new ArrayList<>(2);
@@ -37,9 +37,7 @@ public class RateLimiter implements Limiter {
         args.add(String.valueOf(tokenRate));
         try (Jedis jedis = jedisPool.getResource()) {
             Object eval = jedis.eval(luaScript, keys, args);
-            if (RESULT_LIMITED == (long)eval) {
-                throw new LimitedException("Rate limited of key: " + key);
-            }
+            return RESULT_UNLIMITED == (long)eval;
         }
     }
 

@@ -37,12 +37,7 @@ public class RateLimiterTest {
         RateLimiter rateLimiter = new RateLimiter(jedisPool);
         String key = "abc";
         for (int i = 0; i < 40; i++) {
-            try {
-                rateLimiter.tryGetToken(key, 3, 1);
-                System.out.println(System.currentTimeMillis() + ": true");
-            } catch (LimitedException e) {
-                System.out.println(System.currentTimeMillis() + ": false");
-            }
+            System.out.println(System.currentTimeMillis() + ": " + rateLimiter.tryAcquire(key, 3, 1));
             Thread.sleep(50L);
         }
     }

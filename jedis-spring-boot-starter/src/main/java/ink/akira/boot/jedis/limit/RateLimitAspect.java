@@ -1,5 +1,6 @@
 package ink.akira.boot.jedis.limit;
 
+import ink.akira.boot.webcore.exception.FrequentOperationException;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
@@ -34,7 +35,9 @@ public class RateLimitAspect {
         String key = parseKey(joinPoint, rateLimit.key());
         int maxToken = rateLimit.maxToken();
         int tokenRate = rateLimit.tokenRate();
-        rateLimiter.tryGetToken(key, maxToken, tokenRate);
+        if (!rateLimiter.tryAcquire(key, maxToken, tokenRate)) {
+            throw new FrequentOperationException("Can not get rate limit token of: " + key);
+        }
         return joinPoint.proceed(joinPoint.getArgs());
     }
 
