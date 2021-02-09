@@ -4,6 +4,7 @@ import ink.akira.boot.webcore.WebResult;
 import ink.akira.boot.webcore.constant.CodeEnum;
 import ink.akira.boot.webcore.exception.BizException;
 import ink.akira.boot.webcore.exception.CodeCapableBizException;
+import ink.akira.boot.webcore.exception.FrequentOperationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -40,5 +41,11 @@ public class ExceptionAdvice {
         } catch (Exception e) {
             return WebResult.fail(exception.getCode(), CodeEnum.BIZ_ERROR.getMessage(), exception.getMessage());
         }
+    }
+
+    @ExceptionHandler(FrequentOperationException.class)
+    public WebResult frequentOperationException(FrequentOperationException exception) {
+        logger.info(exception.getClass().getName() + ": " + exception.getMessage());
+        return WebResult.fail(CodeEnum.FREQUENT_OPERATION, exception.getMessage());
     }
 }
