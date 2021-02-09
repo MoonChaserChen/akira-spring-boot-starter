@@ -38,6 +38,7 @@ jedis.timeout=5000
 ```
 
 ## 限流
+### 限制访问频率
 使用令牌桶算法实现，实用方式 `@RateLimit`：
 ```java
 @RestController
@@ -55,4 +56,21 @@ public class HelloController {
 2. maxToken： 令牌桶最大令牌数，也是令牌桶初始化时的令牌数
 3. tokenRate： 令牌桶中每秒生成的令牌数
 
-如发生限流，则会抛出 `LimitedException` 异常，可通过 `@RestControllerAdvice` + `@ExceptionHandler` 进行统一处理
+如发生限流，则会抛出 `FrequentOperationException` 异常，可通过[webcore.exception-advice.enable](../webcore-spring-boot-starter/README.md#其它配置)进行统一处理
+
+### 限制访问间隔
+```java
+@RestController
+public class HelloController {
+    @RequestMapping("/hello")
+    @DelayLimit(key = "'delay_' + #userId", leastDelay = 1, timeUnit = TimeUnit.SECONDS)
+    public String hello(String userId) {
+        System.out.println("visit");
+        return "success";
+    }
+}
+```
+如上，限制两次访问间隔不小于1秒，防止页面连续点击等情况导致快速连续的相同关键性操作。
+
+如被限制，则会抛出 `FrequentOperationException` 异常，可通过[webcore.exception-advice.enable](../webcore-spring-boot-starter/README.md#其它配置)进行统一处理
+
