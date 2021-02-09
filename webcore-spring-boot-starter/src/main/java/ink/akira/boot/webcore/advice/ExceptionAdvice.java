@@ -6,6 +6,7 @@ import ink.akira.boot.webcore.exception.BizException;
 import ink.akira.boot.webcore.exception.CodeCapableBizException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
  * @date 2021/2/7 10:49 上午
  */
 @RestControllerAdvice
+@ConditionalOnProperty(value = "webcore.exception-advice.enable", havingValue = "true")
 public class ExceptionAdvice {
     private static final Logger logger = LoggerFactory.getLogger(ExceptionAdvice.class);
 
