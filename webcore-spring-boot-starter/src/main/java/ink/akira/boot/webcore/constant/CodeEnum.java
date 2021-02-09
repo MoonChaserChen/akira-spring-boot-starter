@@ -14,7 +14,7 @@ public enum CodeEnum {
     NPE(-2, "系统异常"),
     PARAM_ERROR(-3, "参数异常"),
 
-    BIZ_ERROR(1, "业务异常"),
+    BIZ_ERROR(1, "操作异常"),
     FREQUENT_OPERATION(2, "操作过于频繁"),
     ;
 
@@ -36,5 +36,14 @@ public enum CodeEnum {
 
     public String getMessage() {
         return message;
+    }
+    
+    public static CodeEnum valueOf(int code) {
+        for (CodeEnum value : values()) {
+            if (value.getCode() == code) {
+                return value;
+            }
+        }
+        throw new IllegalArgumentException("No CodeEnum of code:" + code);
     }
 }
