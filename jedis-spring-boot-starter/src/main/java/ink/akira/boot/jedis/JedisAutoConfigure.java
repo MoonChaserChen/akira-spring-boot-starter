@@ -1,6 +1,7 @@
 package ink.akira.boot.jedis;
 
-import ink.akira.boot.jedis.limit.RateLimiter;
+import ink.akira.boot.jedis.limit.delay.DelayLimiter;
+import ink.akira.boot.jedis.limit.rate.RateLimiter;
 import ink.akira.boot.jedis.service.JedisDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -49,4 +50,8 @@ public class JedisAutoConfigure {
         return new RateLimiter(jedisPool);
     }
 
+    @Bean
+    public DelayLimiter delayLimiter(JedisDAO jedisDAO) {
+        return new DelayLimiter(jedisDAO);
+    }
 }

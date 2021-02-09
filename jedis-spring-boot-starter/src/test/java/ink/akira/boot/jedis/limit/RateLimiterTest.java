@@ -1,5 +1,6 @@
 package ink.akira.boot.jedis.limit;
 
+import ink.akira.boot.jedis.limit.rate.RateLimiter;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

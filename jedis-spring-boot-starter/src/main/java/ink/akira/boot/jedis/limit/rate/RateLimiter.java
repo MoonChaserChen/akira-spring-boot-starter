@@ -1,5 +1,6 @@
-package ink.akira.boot.jedis.limit;
+package ink.akira.boot.jedis.limit.rate;
 
+import ink.akira.boot.jedis.limit.Limiter;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
@@ -8,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 限流
+ * 访问频率限流（采用令牌桶实现）
  *
  * @author 雪行
  * @date 2021/2/8 3:07 下午

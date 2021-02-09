@@ -1,5 +1,6 @@
-package ink.akira.boot.jedis.limit;
+package ink.akira.boot.jedis.limit.rate;
 
+import ink.akira.boot.jedis.limit.SpelStringParser;
 import ink.akira.boot.webcore.exception.FrequentOperationException;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -23,33 +24,16 @@ import org.springframework.stereotype.Component;
 @Component
 public class RateLimitAspect {
     @Autowired
-    private RateLimiter                          rateLimiter;
-    private final SpelExpressionParser           parser         = new SpelExpressionParser();
-    private final DefaultParameterNameDiscoverer nameDiscoverer = new DefaultParameterNameDiscoverer();
+    private RateLimiter rateLimiter;
 
-    @Pointcut(value = "@annotation(rateLimit)")
-    public void pointCut(RateLimit rateLimit) {}
-
-    @Around(value = "pointCut(rateLimit)", argNames = "joinPoint,rateLimit")
+    @Around(value = "@annotation(rateLimit)")
     public Object around(ProceedingJoinPoint joinPoint, RateLimit rateLimit) throws Throwable {
-        String key = parseKey(joinPoint, rateLimit.key());
+        String key = SpelStringParser.parseKey(joinPoint, rateLimit.key());
         int maxToken = rateLimit.maxToken();
         int tokenRate = rateLimit.tokenRate();
         if (!rateLimiter.tryAcquire(key, maxToken, tokenRate)) {
             throw new FrequentOperationException("Can not get rate limit token of: " + key);
         }
         return joinPoint.proceed(joinPoint.getArgs());
-    }
-
-    private String parseKey(JoinPoint joinPoint, String spelString) {
-        MethodSignature methodSignature = (MethodSignature) joinPoint.getSignature();
-        String[] paramNames = nameDiscoverer.getParameterNames(methodSignature.getMethod());
-        Expression expression = parser.parseExpression(spelString);
-        EvaluationContext context = new StandardEvaluationContext();
-        Object[] args = joinPoint.getArgs();
-        for(int i = 0 ; i < args.length ; i++) {
-            context.setVariable(paramNames[i], args[i]);
-        }
-        return expression.getValue(context, String.class);
     }
 }

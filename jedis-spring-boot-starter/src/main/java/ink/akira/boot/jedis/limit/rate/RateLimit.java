@@ -1,4 +1,4 @@
-package ink.akira.boot.jedis.limit;
+package ink.akira.boot.jedis.limit.rate;
 
 import java.lang.annotation.*;
 

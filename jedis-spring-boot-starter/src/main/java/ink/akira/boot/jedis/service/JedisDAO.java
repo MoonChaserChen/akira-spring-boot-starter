@@ -3,6 +3,8 @@ package ink.akira.boot.jedis.service;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * @author akira
  * Created by akira on 2019/2/14.
@@ -29,6 +31,16 @@ public class JedisDAO {
     public boolean getLock(String lockKey, String identifier) {
         try (Jedis jedis = jedisPool.getResource()) {
             return jedis.setnx(lockKey, identifier) == 1L;
+        }
+    }
+
+    public boolean getLock(String lockKey, String identifier, long lockPeriod, TimeUnit timeUnit) {
+        try (Jedis jedis = jedisPool.getResource()) {
+            boolean acquired = jedis.setnx(lockKey, identifier) == 1L;
+            if (acquired) {
+                jedis.pexpire(lockKey, timeUnit.toMillis(lockPeriod));
+            }
+            return acquired;
         }
     }
 
