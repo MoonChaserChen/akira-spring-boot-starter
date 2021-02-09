@@ -36,10 +36,9 @@ public class RateLimiterTest {
     public void testLimit() throws InterruptedException {
         RateLimiter rateLimiter = new RateLimiter(jedisPool);
         String key = "abc";
-        rateLimiter.addLimitIfNotExists(key, 10, 1);
         for (int i = 0; i < 40; i++) {
             try {
-                rateLimiter.tryGetToken(key);
+                rateLimiter.tryGetToken(key, 3, 1);
                 System.out.println(System.currentTimeMillis() + ": true");
             } catch (LimitedException e) {
                 System.out.println(System.currentTimeMillis() + ": false");
