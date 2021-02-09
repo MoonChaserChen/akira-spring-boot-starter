@@ -15,6 +15,7 @@
 
     <modules>
         <module>jedis-spring-boot-starter</module>
+        <module>webcore-spring-boot-starter</module>
     </modules>
 
     <dependencies>
