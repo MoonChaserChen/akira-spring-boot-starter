@@ -1,9 +1,11 @@
 package ink.akira.boot.jedis;
 
+import ink.akira.boot.jedis.limit.RateLimiter;
 import ink.akira.boot.jedis.service.JedisDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
@@ -13,6 +15,7 @@ import redis.clients.jedis.JedisPoolConfig;
  * Created by akira on 2019/2/14.
  */
 @Configuration
+@ComponentScan({"ink.akira.boot.jedis"})
 @EnableConfigurationProperties(JedisProperties.class)
 public class JedisAutoConfigure {
     @Autowired
@@ -41,5 +44,9 @@ public class JedisAutoConfigure {
         return new JedisDAO(jedisPool);
     }
 
+    @Bean
+    public RateLimiter rateLimiter(JedisPool jedisPool) {
+        return new RateLimiter(jedisPool);
+    }
 
 }

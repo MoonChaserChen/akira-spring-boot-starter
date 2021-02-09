@@ -8,10 +8,7 @@ import redis.clients.jedis.JedisPool;
  * Created by akira on 2019/2/14.
  */
 public class JedisDAO {
-    private JedisPool jedisPool;
-
-    public JedisDAO() {
-    }
+    private final JedisPool jedisPool;
 
     public JedisDAO(JedisPool jedisPool) {
         this.jedisPool = jedisPool;
