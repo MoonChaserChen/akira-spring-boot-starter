@@ -32,8 +32,8 @@ public class RateLimitAspect {
     @Around(value = "pointCut(rateLimit)", argNames = "joinPoint,rateLimit")
     public Object around(ProceedingJoinPoint joinPoint, RateLimit rateLimit) throws Throwable {
         String key = parseKey(joinPoint, rateLimit.key());
-        int max = rateLimit.max();
-        int rate = rateLimit.rate();
+        int max = rateLimit.maxToken();
+        int rate = rateLimit.tokenRate();
         rateLimiter.addLimitIfNotExists(key, max, rate);
         rateLimiter.tryGetToken(key);
         return joinPoint.proceed(joinPoint.getArgs());

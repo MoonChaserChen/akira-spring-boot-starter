@@ -21,10 +21,10 @@ public @interface RateLimit {
     /**
      * @return 令牌桶最大令牌数
      */
-    int max();
+    int maxToken();
 
     /**
      * @return 令牌生成速率，每秒生成多少个
      */
-    int rate();
+    int tokenRate();
 }
