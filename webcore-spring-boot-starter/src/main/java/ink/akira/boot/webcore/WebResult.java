@@ -1,5 +1,6 @@
 package ink.akira.boot.webcore;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import ink.akira.boot.webcore.constant.CodeEnum;
 
 /**
@@ -8,6 +9,7 @@ import ink.akira.boot.webcore.constant.CodeEnum;
  * @author 雪行
  * @date 2021/2/9 2:44 下午
  */
+@JsonFilter(value = "webResultFilter")
 public class WebResult {
     public static final int SUCCESS = 0;
     public static final int FAIL    = CodeEnum.SYSTEM_ERROR.getCode();
