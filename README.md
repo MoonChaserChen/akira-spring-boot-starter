@@ -9,3 +9,5 @@
 对访问者IP的限制
 4. ehcache-spring-boot-starter
 ehcache工具
+5. webcore-spring-boot-starter
+[部分WEB开发基础功能&规范](/webcore-spring-boot-starter/README.md)
