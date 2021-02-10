@@ -1,5 +1,6 @@
 package ink.akira.boot.jedis;
 
+import ink.akira.boot.jedis.limit.concurrent.ConcurrentLimiter;
 import ink.akira.boot.jedis.limit.delay.DelayLimiter;
 import ink.akira.boot.jedis.limit.rate.RateLimiter;
 import ink.akira.boot.jedis.service.JedisDAO;
@@ -53,5 +54,10 @@ public class JedisAutoConfigure {
     @Bean
     public DelayLimiter delayLimiter(JedisDAO jedisDAO) {
         return new DelayLimiter(jedisDAO);
+    }
+
+    @Bean
+    public ConcurrentLimiter concurrentLimiter(JedisDAO jedisDAO) {
+        return new ConcurrentLimiter(jedisDAO);
     }
 }

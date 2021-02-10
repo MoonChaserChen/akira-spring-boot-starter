@@ -24,7 +24,8 @@ public class WebCoreAutoConfigure {
 
     @Bean
     public ObjectMapper objectMapper() {
-        SimpleBeanPropertyFilter conditionalFilter = webCoreProperties.getDebug().isEnable()
+        WebCoreProperties.Debug debug = webCoreProperties.getDebug();
+        SimpleBeanPropertyFilter conditionalFilter = debug != null && debug.isEnable()
                 ? SimpleBeanPropertyFilter.serializeAll() : SimpleBeanPropertyFilter.serializeAllExcept("debugMsg");
         FilterProvider filters = new SimpleFilterProvider().addFilter("webResultFilter", conditionalFilter);
         ObjectMapper objectMapper = new ObjectMapper();
