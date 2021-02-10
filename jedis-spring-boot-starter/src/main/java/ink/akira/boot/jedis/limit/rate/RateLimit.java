@@ -3,7 +3,7 @@ package ink.akira.boot.jedis.limit.rate;
 import java.lang.annotation.*;
 
 /**
- * 限流
+ * 限流，基于令牌桶实现
  *
  * @author 雪行
  * @date 2021/2/8 3:37 下午
@@ -26,5 +26,5 @@ public @interface RateLimit {
     /**
      * @return 令牌生成速率，每秒生成多少个
      */
-    int tokenRate();
+    double tokenRate();
 }

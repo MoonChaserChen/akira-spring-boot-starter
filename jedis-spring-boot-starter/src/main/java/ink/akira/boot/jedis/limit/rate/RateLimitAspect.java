@@ -2,16 +2,9 @@ package ink.akira.boot.jedis.limit.rate;
 
 import ink.akira.boot.jedis.limit.SpelStringParser;
 import ink.akira.boot.webcore.exception.FrequentOperationException;
-import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
-import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.DefaultParameterNameDiscoverer;
-import org.springframework.expression.EvaluationContext;
-import org.springframework.expression.Expression;
-import org.springframework.expression.spel.standard.SpelExpressionParser;
-import org.springframework.expression.spel.support.StandardEvaluationContext;
 import org.springframework.stereotype.Component;
 
 /**
@@ -30,7 +23,7 @@ public class RateLimitAspect {
     public Object around(ProceedingJoinPoint joinPoint, RateLimit rateLimit) throws Throwable {
         String key = SpelStringParser.parseKey(joinPoint, rateLimit.key());
         int maxToken = rateLimit.maxToken();
-        int tokenRate = rateLimit.tokenRate();
+        double tokenRate = rateLimit.tokenRate();
         if (!rateLimiter.tryAcquire(key, maxToken, tokenRate)) {
             throw new FrequentOperationException("Can not get rate limit token of: " + key);
         }
